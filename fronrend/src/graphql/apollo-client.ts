@@ -19,11 +19,11 @@ typeof window != "undefined"
 createClient({
 url: __DEV__
 ? "ws://localhost:4000/graphql/subscriptions"
-: process.env.WS_API_URL,
+: (process.env.WS_API_URL as string),
 connectionParams: async () => ({ session: await getSession() }),
 })
 )
-: null;
+: null
 
 const link =
   typeof window != "undefined" && wsLink != null
