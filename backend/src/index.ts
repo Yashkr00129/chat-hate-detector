@@ -18,7 +18,7 @@ import * as dotenv from "dotenv";
 import cors from "cors";
 import { json } from "body-parser";
 
-const __DEV__=process.env.NODE_ENV !== "production";
+const __DEV__ = process.env.NODE_ENV !== "production";
 
 const main = async () => {
   dotenv.config();
@@ -93,7 +93,7 @@ const main = async () => {
   await server.start();
 
   const corsOptions = {
-    origin:__DEV__?  "http://localhost:3000":process.env.CLIENT_ORIGIN ,
+    origin: __DEV__ ? "http://localhost:3000" : process.env.CLIENT_ORIGIN,
     credentials: true,
   };
 
@@ -112,7 +112,7 @@ const main = async () => {
 
   // server.applyMiddleware({ app, path: "/graphql", cors: corsOptions });
 
-  const PORT = 4000;
+  const PORT = process.env.PORT || 4000;
 
   // Now that our HTTP server is fully set up, we can listen to it.
   await new Promise<void>((resolve) =>
