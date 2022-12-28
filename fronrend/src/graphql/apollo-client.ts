@@ -7,7 +7,7 @@ import { getSession } from "next-auth/react";
 const __DEV__ = process.env.NODE_ENV !== "production";
 
 const httpLink = new HttpLink({
-  uri: DEV
+  uri: __DEV__
   ? "http://localhost:4000/graphql"
   : process.env.API_URL,
   credentials: "include",
