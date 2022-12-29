@@ -109,6 +109,9 @@ const main = async () => {
       },
     })
   );
+  app.get("/", (req, res) => {
+    res.send("Hello World");
+    });
 
   // server.applyMiddleware({ app, path: "/graphql", cors: corsOptions });
 
