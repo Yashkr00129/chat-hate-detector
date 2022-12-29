@@ -92,14 +92,14 @@ const main = async () => {
   });
   await server.start();
 
-  const corsOptions = {
-    origin: __DEV__ ? "http://localhost:3000" : process.env.CLIENT_ORIGIN,
-    credentials: true,
-  };
+  // const corsOptions = {
+  //   origin: __DEV__ ? "http://localhost:3000" : process.env.CLIENT_ORIGIN,
+  //   credentials: true,
+  // };
 
   app.use(
     "/graphql",
-    cors<cors.CorsRequest>(corsOptions),
+    cors<cors.CorsRequest>(),
     json(),
     expressMiddleware(server, {
       context: async ({ req }): Promise<GraphQLContext> => {
