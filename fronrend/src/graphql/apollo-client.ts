@@ -7,24 +7,20 @@ import { getSession } from "next-auth/react";
 const __DEV__ = process.env.NODE_ENV !== "production";
 
 const httpLink = new HttpLink({
-  uri:process.env.API_URL,
-  // uri: __DEV__
-  // ? "http://localhost:4000/graphql"
-  // : process.env.API_URL,
+  uri: "https://chat-hate-detector-production-1314.up.railway.app/graphql",
   credentials: "include",
-});
+  });
   
-const wsLink =
-typeof window != "undefined"
-? new GraphQLWsLink(
-createClient({
-url: __DEV__
-? "ws://localhost:4000/graphql/subscriptions"
-: (process.env.WS_API_URL as string),
-connectionParams: async () => ({ session: await getSession() }),
-})
-)
-: null
+  
+  const wsLink =
+  typeof window != "undefined"
+  ? new GraphQLWsLink(
+  createClient({
+  url: "ws://chat-hate-detector-production-1314.up.railway.app/graphql/subscriptions",
+  connectionParams: async () => ({ session: await getSession() }),
+  })
+  )
+  : null;
 
 const link =
   typeof window != "undefined" && wsLink != null
