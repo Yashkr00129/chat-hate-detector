@@ -20,7 +20,7 @@ import { json } from "body-parser";
 
 const __DEV__ = process.env.NODE_ENV !== "production";
 
-const main = async () => {
+const main = async (port) => {
   dotenv.config();
   // Create the schema, which will be used separately by ApolloServer and
   // the WebSocket server.
@@ -111,17 +111,15 @@ const main = async () => {
   );
   app.get("/", (req, res) => {
     res.send("Hello World");
-    });
+  });
 
   // server.applyMiddleware({ app, path: "/graphql", cors: corsOptions });
 
-  const PORT = process.env.PORT || 4000;
-
   // Now that our HTTP server is fully set up, we can listen to it.
-  await new Promise<void>((resolve) =>
-    httpServer.listen({ port: PORT }, resolve)
-  );
-  console.log(`Server is now running on http://localhost:${PORT}/graphql`);
+  await new Promise<void>((resolve) => httpServer.listen({ port }, resolve));
+  console.log(`Server is now running on http://localhost:${port}/graphql`);
 };
 
-main().catch((err) => console.log(err));
+const port = process.env.PORT;
+
+main(port).catch((err) => console.log(err));

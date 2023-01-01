@@ -7,7 +7,7 @@ import { getSession } from "next-auth/react";
 const __DEV__ = process.env.NODE_ENV !== "production";
 
 const httpLink = new HttpLink({
-  uri: "https://chat-hate-detector-production-1314.up.railway.app/graphql",
+  uri: "https://imessage-server.up.railway.app/graphql",
   credentials: "include",
   });
   
