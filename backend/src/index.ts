@@ -88,6 +88,7 @@ const main = async (port: string) => {
       },
     ],
   });
+
   await server.start();
 
   // const corsOptions = {
