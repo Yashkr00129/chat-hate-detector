@@ -4,23 +4,20 @@ import { createClient } from "graphql-ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { getSession } from "next-auth/react";
 
-const __DEV__ = process.env.NODE_ENV !== "production";
-
 const httpLink = new HttpLink({
   uri: "https://imessage-server.up.railway.app/graphql",
-  credentials: "include",
-  });
-  
-  
-  const wsLink =
+  // credentials: "include",
+});
+
+const wsLink =
   typeof window != "undefined"
-  ? new GraphQLWsLink(
-  createClient({
-  url: "ws://chat-hate-detector-production-1314.up.railway.app/graphql/subscriptions",
-  connectionParams: async () => ({ session: await getSession() }),
-  })
-  )
-  : null;
+    ? new GraphQLWsLink(
+        createClient({
+          url: "ws://imessage-server.up.railway.app/graphql/subscriptions",
+          connectionParams: async () => ({ session: await getSession() }),
+        })
+      )
+    : null;
 
 const link =
   typeof window != "undefined" && wsLink != null
