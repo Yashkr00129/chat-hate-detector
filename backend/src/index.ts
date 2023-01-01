@@ -18,8 +18,6 @@ import * as dotenv from "dotenv";
 import cors from "cors";
 import { json } from "body-parser";
 
-const __DEV__ = process.env.NODE_ENV !== "production";
-
 const main = async (port: string) => {
   dotenv.config();
   // Create the schema, which will be used separately by ApolloServer and

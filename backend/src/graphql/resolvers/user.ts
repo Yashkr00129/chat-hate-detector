@@ -12,6 +12,8 @@ const resolvers = {
       const { username: searchedUsername } = args;
       const { prisma, session } = context;
 
+      console.log(session);
+
       if (!session?.user) {
         throw new GraphQLError("Not Authorized");
       }
