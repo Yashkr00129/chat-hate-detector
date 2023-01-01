@@ -102,7 +102,6 @@ const main = async (port: string) => {
     "/graphql",
     cors<cors.CorsRequest>({
       origin: [
-        "http://localhost:3000",
         "https://calm-income-production.up.railway.app",
       ],
       credentials: true,
