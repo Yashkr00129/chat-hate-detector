@@ -104,6 +104,7 @@ const main = async (port: string) => {
         "http://localhost:3000",
         "https://calm-income-production.up.railway.app",
       ],
+      credentials: true,
     }),
     json(),
     expressMiddleware(server, {
