@@ -99,7 +99,12 @@ const main = async (port: string) => {
 
   app.use(
     "/graphql",
-    cors<cors.CorsRequest>(),
+    cors<cors.CorsRequest>({
+      origin: [
+        "http://localhost:3000",
+        "https://calm-income-production.up.railway.app",
+      ],
+    }),
     json(),
     expressMiddleware(server, {
       context: async ({ req }): Promise<GraphQLContext> => {
@@ -109,7 +114,6 @@ const main = async (port: string) => {
       },
     })
   );
-
 
   // server.applyMiddleware({ app, path: "/graphql", cors: corsOptions });
 
