@@ -17,6 +17,7 @@ import { GraphQLContext, Session, SubscriptionContext } from "./utils/types";
 import * as dotenv from "dotenv";
 import cors from "cors";
 import { json } from "body-parser";
+import morgan from "morgan";
 
 const __DEV__ = process.env.NODE_ENV !== "production";
 
@@ -96,6 +97,9 @@ const main = async (port: string) => {
   //   origin: __DEV__ ? "http://localhost:3000" : process.env.CLIENT_ORIGIN,
   //   credentials: true,
   // };
+
+  app.use(morgan());
+  console.log(process.version);
 
   app.use(
     "/graphql",
