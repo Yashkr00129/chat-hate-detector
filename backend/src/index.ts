@@ -120,6 +120,6 @@ const main = async (port: string) => {
   console.log(`Server is now running on http://localhost:${port}/graphql`);
 };
 
-const port = process.env.PORT;
+const port = process.env.PORT as string;
 
 main(port).catch((err) => console.log(err));
