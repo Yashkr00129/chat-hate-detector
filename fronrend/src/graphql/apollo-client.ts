@@ -17,7 +17,7 @@ const wsLink =
         })
       )
     : null;
-
+ 
 const link =
   typeof window != "undefined" && wsLink != null
     ? split(
