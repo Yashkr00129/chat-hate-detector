@@ -18,7 +18,7 @@ import * as dotenv from "dotenv"
 import cors from "cors"
 import { json } from "body-parser"
 import loggerMiddleware from "./middleware/logger"
-
+import { ApolloServerPluginLandingPageProductionDefault } from '@apollo/server/plugin/landingPage/default';
 const main = async (port: string) => {
   dotenv.config()
   // Create the schema, which will be used separately by ApolloServer and
