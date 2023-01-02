@@ -103,8 +103,10 @@ const main = async (port: string) => {
     credentials: true,
   }
 
+
   app.use(
     "/graphql",
+    loggerMiddleware,
     cors<cors.CorsRequest>(corsOptions),
     json(),
     expressMiddleware(server, {
@@ -115,8 +117,6 @@ const main = async (port: string) => {
       },
     })
   )
-
-  app.use(loggerMiddleware)
 
   // server.applyMiddleware({ app, path: "/graphql", cors: corsOptions });
 
