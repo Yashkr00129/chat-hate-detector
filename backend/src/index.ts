@@ -4,6 +4,7 @@ import { PrismaClient } from "@prisma/client";
 // import { ApolloServer } from "apollo-server-express";
 import { ApolloServer } from "@apollo/server";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
+import { ApolloServerPluginLandingPageProductionDefault } from "@apollo/server/plugin/landingPage/default";
 import { expressMiddleware } from "@apollo/server/express4";
 import express from "express";
 import { PubSub } from "graphql-subscriptions";
@@ -36,6 +37,7 @@ const main = async (port: string) => {
   const wsServer = new WebSocketServer({
     server: httpServer,
     path: "/graphql/subscriptions",
+    
   });
 
   // Context parameters
@@ -59,11 +61,16 @@ const main = async (port: string) => {
   const serverCleanup = useServer(
     {
       schema,
-      context: (ctx: SubscriptionContext) => {
-        // This will be run every time the client sends a subscription request
-        // Returning an object will add that information to our
-        // GraphQL context, which all of our resolvers have access to.
-        return getSubscriptionContext(ctx);
+      context: async (ctx: SubscriptionContext) => {
+        // ctx is the graphql-ws Context where connectionParams live
+        if (ctx.connectionParams && ctx.connectionParams.session) {
+          console.log("SERVER CONTEXT", ctx.connectionParams);
+
+          const { session } = ctx.connectionParams;
+          return { session, prisma, pubsub };
+        }
+        // Otherwise let our resolvers know we don't have a current user
+        return { session: null, prisma, pubsub };
       },
     },
     wsServer
@@ -72,9 +79,11 @@ const main = async (port: string) => {
   const server = new ApolloServer({
     schema,
     csrfPrevention: true,
+   
     plugins: [
       // Proper shutdown for the HTTP server.
-      ApolloServerPluginDrainHttpServer({ httpServer }),
+      ApolloServerPluginDrainHttpServer({ httpServer
+      }), 
 
       // Proper shutdown for the WebSocket server.
       {
@@ -91,23 +100,19 @@ const main = async (port: string) => {
 
   await server.start();
 
-  // const corsOptions = {
-  //   origin: __DEV__ ? "http://localhost:3000" : process.env.CLIENT_ORIGIN,
-  //   credentials: true,
-  // };
+  const corsOptions = {
+    origin: "https://calm-income-production.up.railway.app",
+    credentials: true,
+  };
 
   console.log(process.version);
 
   app.use(
     "/graphql",
-    cors<cors.CorsRequest>({
-      origin: [
-        "https://calm-income-production.up.railway.app",
-      ],
-      credentials: true,
-    }),
+    cors<cors.CorsRequest>(corsOptions),
     json(),
     expressMiddleware(server, {
+      
       context: async ({ req }): Promise<GraphQLContext> => {
         const session = await getSession({ req });
 
@@ -120,7 +125,7 @@ const main = async (port: string) => {
 
   // Now that our HTTP server is fully set up, we can listen to it.
   await new Promise<void>((resolve) => httpServer.listen({ port }, resolve));
-  console.log(`Server is now running on http://localhost:${port}/graphql`);
+  console.log(`Server is now running on https://calm-income-production.up.railway.app:${port}/graphql`);
 };
 
 const PORT = process.env.PORT as string;
