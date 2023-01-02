@@ -27,14 +27,14 @@ const Home: NextPage = () => {
       </Box>
     )
 }
-// export async function getServerSideProps(context: NextPageContext) {
-//   const session = await getSession(context);
+export async function getServerSideProps(context: NextPageContext) {
+  const session = await getSession(context);
 
-//   return {
-//     props: {
-//       session,
-//     },
-//   };
-// }
+  return {
+    props: {
+      session,
+    },
+  };
+}
 
 export default Home;
