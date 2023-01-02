@@ -6,6 +6,9 @@ import { getSession } from "next-auth/react";
 
 const httpLink = new HttpLink({
   uri: "https://imessage-server.up.railway.app/graphql",
+  fetchOptions: {
+    credentials: "include",
+  },
 });
 
 const wsLink =
