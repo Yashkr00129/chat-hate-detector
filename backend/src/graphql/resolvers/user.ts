@@ -46,11 +46,14 @@ const resolvers = {
       args: { username: string },
       context: GraphQLContext
     ): Promise<CreateUserNameResponse> => {
+      console.log("start function");
+      console.log("fall 1");
       const { username } = args;
+      console.log("fall 2");
       const { session, prisma } = context;
-
+      console.log("fall 3");
       console.log(session);
-
+      console.log("fall 4");
       if (!session?.user) {
         return {
           error: "Not Authorized",

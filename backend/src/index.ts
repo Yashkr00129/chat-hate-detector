@@ -73,9 +73,11 @@ const main = async (port: string) => {
   const server = new ApolloServer({
     schema,
     csrfPrevention: true,
+   
     plugins: [
       // Proper shutdown for the HTTP server.
-      ApolloServerPluginDrainHttpServer({ httpServer }),
+      ApolloServerPluginDrainHttpServer({ httpServer
+      }), 
 
       // Proper shutdown for the WebSocket server.
       {
@@ -99,15 +101,10 @@ const main = async (port: string) => {
 
   app.use(
     "/graphql",
-    cors<cors.CorsRequest>({
-      origin: [
-        "http://localhost:3000",
-        "https://calm-income-production.up.railway.app",
-      ],
-      credentials: true,
-    }),
+    cors<cors.CorsRequest>(corsOptions),
     json(),
     expressMiddleware(server, {
+      
       context: async ({ req }): Promise<GraphQLContext> => {
         const session = await getSession({ req })
 
