@@ -93,11 +93,6 @@ const main = async (port: string) => {
 
   await server.start();
 
-  // const corsOptions = {
-  //   origin: __DEV__ ? "http://localhost:3000" : process.env.CLIENT_ORIGIN,
-  //   credentials: true,
-  // };
-
   const corsOptions = {
     origin: "https://calm-income-production.up.railway.app",
     credentials: true,
@@ -105,7 +100,10 @@ const main = async (port: string) => {
 
   app.use(
     "/graphql",
-    cors<cors.CorsRequest>(corsOptions),
+    cors<cors.CorsRequest>({
+      origin: "https://calm-income-production.up.railway.app",
+      credentials: false,
+    }),
     loggerMiddleware,
     json(),
     expressMiddleware(server, {
