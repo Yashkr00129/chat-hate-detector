@@ -8,11 +8,6 @@ const httpLink = new HttpLink({
   uri: "https://imessage-server.up.railway.app/graphql",
   // uri: "http://localhost:5000/graphql",
   credentials: "include",
-  fetchOptions: {
-    headers: {
-      Cookie: async () => ({ session: await getSession() }),
-    },
-  },
 });
 
 const wsLink =

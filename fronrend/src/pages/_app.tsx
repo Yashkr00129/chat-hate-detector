@@ -1,7 +1,7 @@
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
-import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider } from "@apollo/client";
 import { theme } from "../chakra/theme";
 import { client } from "../graphql/apollo-client";
 import { Toaster } from "react-hot-toast";
@@ -12,12 +12,12 @@ export default function App({
 }: AppProps) {
   return (
     <ApolloProvider client={client}>
-    <SessionProvider session={session}>
-      <ChakraProvider theme={theme} cssVarsRoot="body">
+      <SessionProvider session={session}>
+        <ChakraProvider theme={theme} cssVarsRoot="body">
           <Component {...pageProps} />
-          <Toaster/>
-      </ChakraProvider>
-    </SessionProvider>
-      </ApolloProvider>
+          <Toaster />
+        </ChakraProvider>
+      </SessionProvider>
+    </ApolloProvider>
   );
 }
