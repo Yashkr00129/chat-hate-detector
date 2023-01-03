@@ -6,7 +6,6 @@ import { getSession } from "next-auth/react";
 
 const httpLink = new HttpLink({
   uri: "https://imessage-server.up.railway.app/graphql",
-  credentials: "include",
 });
 
 const wsLink =
@@ -18,7 +17,7 @@ const wsLink =
         })
       )
     : null;
- 
+
 const link =
   typeof window != "undefined" && wsLink != null
     ? split(
@@ -36,6 +35,5 @@ const link =
 
 export const client = new ApolloClient({
   link,
-  credentials: "include",
   cache: new InMemoryCache(),
 });
