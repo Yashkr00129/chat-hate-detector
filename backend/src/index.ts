@@ -95,7 +95,10 @@ const main = async (port: string) => {
 
   app.use(
     "/graphql",
-    cors<cors.CorsRequest>({ origin: true, credentials: true }),
+    cors<cors.CorsRequest>({
+      origin: "https://calm-income-production.up.railway.app",
+      credentials: true,
+    }),
     loggerMiddleware,
     json(),
     expressMiddleware(server, {
