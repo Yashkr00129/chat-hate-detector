@@ -74,7 +74,6 @@ const main = async (port: string) => {
   const server = new ApolloServer({
     schema,
     csrfPrevention: true,
-
     plugins: [
       // Proper shutdown for the HTTP server.
       ApolloServerPluginDrainHttpServer({ httpServer }),
@@ -106,8 +105,8 @@ const main = async (port: string) => {
 
   app.use(
     "/graphql",
+    cors<cors.CorsRequest>(corsOptions),
     loggerMiddleware,
-    cors<cors.CorsRequest>(),
     json(),
     expressMiddleware(server, {
       context: async ({ req }): Promise<GraphQLContext> => {
