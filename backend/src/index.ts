@@ -32,6 +32,15 @@ const main = async (port: string) => {
   // Create an Express app and HTTP server; we will attach both the WebSocket
   // server and the ApolloServer to this HTTP server.
   const app = express();
+
+  // Configure Cors
+  app.use(
+    cors({
+      origin: ["http://localhost:3000", process.env.CLIENT_ORIGIN as string],
+      credentials: true,
+    })
+  );
+
   const httpServer = createServer(app);
 
   // Create our WebSocket server using the HTTP server we just set up.
