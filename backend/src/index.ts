@@ -20,7 +20,7 @@ import { json } from "body-parser";
 import loggerMiddleware from "./middleware/logger";
 import { ApolloServerPluginLandingPageProductionDefault } from "@apollo/server/plugin/landingPage/default";
 
-const main = async (port: string) => {
+const main = async (port: number) => {
   dotenv.config();
   // Create the schema, which will be used separately by ApolloServer and
   // the WebSocket server.
@@ -32,14 +32,6 @@ const main = async (port: string) => {
   // Create an Express app and HTTP server; we will attach both the WebSocket
   // server and the ApolloServer to this HTTP server.
   const app = express();
-
-  // Configure Cors
-  app.use(
-    cors({
-      origin: ["http://localhost:3000", process.env.CLIENT_ORIGIN as string],
-      credentials: true,
-    })
-  );
 
   const httpServer = createServer(app);
 
@@ -102,10 +94,11 @@ const main = async (port: string) => {
 
   await server.start();
 
+  // Configure Cors
   app.use(
     "/graphql",
     cors<cors.CorsRequest>({
-      origin: "https://calm-income-production.up.railway.app",
+      origin: ["http://localhost:3000", process.env.CLIENT_ORIGIN as string],
       credentials: true,
     }),
     loggerMiddleware,
@@ -126,6 +119,6 @@ const main = async (port: string) => {
   console.log(`Server is now running on http://localhost:${port}/graphql`);
 };
 
-const PORT = process.env.PORT as string;
+const PORT = 4000;
 
 main(PORT).catch((err) => console.log(err));

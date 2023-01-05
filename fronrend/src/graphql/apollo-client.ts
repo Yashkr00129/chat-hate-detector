@@ -5,11 +5,7 @@ import { getMainDefinition } from "@apollo/client/utilities";
 import { getSession } from "next-auth/react";
 
 const httpLink = new HttpLink({
-  uri: "https://imessage-server.up.railway.app/graphql",
-  // uri: "http://localhost:5000/graphql",
-  fetchOptions: {
-    credentials: "include",
-  },
+  uri: "http://localhost:5000/graphql",
   credentials: "include",
 });
 
@@ -17,8 +13,7 @@ const wsLink =
   typeof window != "undefined"
     ? new GraphQLWsLink(
         createClient({
-          url: "ws://imessage-server.up.railway.app/graphql/subscriptions",
-          // url: "ws://localhost:5000/graphql/subscriptions",
+          url: "ws://localhost:5000/graphql/subscriptions",
           connectionParams: async () => ({ session: await getSession() }),
         })
       )
