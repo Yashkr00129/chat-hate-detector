@@ -98,19 +98,24 @@ const main = async (port: number) => {
   app.use(
     "/graphql",
     cors<cors.CorsRequest>({
-      origin: ["http://localhost:3000", "http://unitymessenger.com",process.env.CLIENT_ORIGIN as string],
+      origin: [
+        "http://localhost:3000",
+        "http://unitymessenger.com",
+        "http://3.83.30.115/",
+        process.env.CLIENT_ORIGIN as string,
+      ],
       credentials: true,
     }),
     loggerMiddleware,
     json(),
     expressMiddleware(server, {
       context: async ({ req }): Promise<GraphQLContext> => {
-        const session = await getSession({ req });
+        const session = await getSession({ req })
 
-        return { session: session as Session, prisma, pubsub };
+        return { session: session as Session, prisma, pubsub }
       },
     })
-  );
+  )
 
   // server.applyMiddleware({ app, path: "/graphql", cors: corsOptions });
 
