@@ -97,15 +97,7 @@ const main = async (port: number) => {
   // Configure Cors
   app.use(
     "/graphql",
-    cors<cors.CorsRequest>({
-      origin: [
-        "http://localhost:3000",
-        "http://unitymessenger.com",
-        "http://3.83.30.115/",
-        process.env.CLIENT_ORIGIN as string,
-      ],
-      credentials: true,
-    }),
+    cors<cors.CorsRequest>(),
     loggerMiddleware,
     json(),
     expressMiddleware(server, {
