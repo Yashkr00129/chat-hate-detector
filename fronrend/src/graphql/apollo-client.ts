@@ -6,7 +6,9 @@ import { getSession } from "next-auth/react"
 
 const httpLink = new HttpLink({
   uri: "http://3.83.30.115/graphql",
-  credentials: "include",
+  fetchOptions: {
+    credentials: "include",
+  },
 })
 
 const wsLink =
