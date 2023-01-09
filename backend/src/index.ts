@@ -32,12 +32,8 @@ const main = async (port: number) => {
   // Create an Express app and HTTP server; we will attach both the WebSocket
   // server and the ApolloServer to this HTTP server.
   const app = express()
-  const allowedOrigins = [
-    "http://localhost:3000",
-    "http://3.83.30.115:3000/",
-    "http://unitymessenger.com",
-  ]
-  app.use(cors({ origin: allowedOrigins, credentials: true }))
+
+  app.use(cors({ origin: "http://unitymessenger.com", credentials: true }))
 
   const httpServer = createServer(app)
 
