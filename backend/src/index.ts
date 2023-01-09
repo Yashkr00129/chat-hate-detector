@@ -99,7 +99,6 @@ const main = async (port: number) => {
   // Configure Cors
   app.use(
     "/graphql",
-    cors<cors.CorsRequest>(),
     loggerMiddleware,
     json(),
     expressMiddleware(server, {
