@@ -1,31 +1,28 @@
 import { ApolloClient, HttpLink, InMemoryCache, split } from "@apollo/client";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
-import { createClient } from "graphql-ws";
 import { getMainDefinition } from "@apollo/client/utilities";
+import { createClient } from "graphql-ws";
 import { getSession } from "next-auth/react";
 
-const httpLink = new HttpLink({
-  uri: "https://imessage-server.up.railway.app/graphql",
-  // uri: "http://localhost:5000/graphql",
-  fetchOptions: {
-    credentials: "include",
-  },
-  credentials: "include",
-});
-
 const wsLink =
-  typeof window != "undefined"
+  typeof window !== "undefined"
     ? new GraphQLWsLink(
         createClient({
-          url: "ws://imessage-server.up.railway.app/graphql/subscriptions",
-          // url: "ws://localhost:5000/graphql/subscriptions",
-          connectionParams: async () => ({ session: await getSession() }),
+          url: "ws://localhost:4000/graphql/subscriptions",
+          connectionParams: async () => ({
+            session: await getSession(),
+          }),
         })
       )
     : null;
 
+const httpLink = new HttpLink({
+  uri: "http://localhost:4000/graphql",
+  credentials: "include",
+});
+
 const link =
-  typeof window != "undefined" && wsLink != null
+  typeof window !== "undefined" && wsLink != null
     ? split(
         ({ query }) => {
           const definition = getMainDefinition(query);
@@ -42,5 +39,4 @@ const link =
 export const client = new ApolloClient({
   link,
   cache: new InMemoryCache(),
-  credentials: "include",
 });
